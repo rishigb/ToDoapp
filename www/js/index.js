@@ -17,6 +17,7 @@ function onDeviceReady() {
 
     //
     db.transaction(function (tx) {
+       //tx.executeSql('DROP TABLE IF EXISTS test_table');
         tx.executeSql('CREATE TABLE IF NOT EXISTS test_table (id integer primary key autoincrement, note text, flag_val integer)'); // Simply creating the table NOT NULL was the earlier issue.
 
         tx.executeSql("DELETE FROM test_table WHERE flag_val = ?", [-1], function (tx, res) {
@@ -33,7 +34,7 @@ function onDeviceReady() {
 
 function recoverTable(){
     db.transaction(function (tx) { //Need this function to work with the SQLIte command as seen above.Create a generic one line statment for this
-        tx.executeSql("SELECT note FROM test_table WHERE flag_val = ?", [-1], function (tx, res) { 
+        tx.executeSql("SELECT note FROM test_table WHERE flag_val = ?", [0], function (tx, res) { 
                for (i = 0; i < res.rows.length; i++) {
 
                 document.getElementById("container").innerHTML += "<div><li>" + res.rows.item(i).note.replace("'","") + "</li></div>";// Replace the quotes with blank
@@ -49,7 +50,7 @@ function recoverTable(){
 function insertintoTable(inpvalue1, inpvalue2) {
 
     db.transaction(function (tx) { //Need this function to work with the SQLIte command as seen above.Create a generic one line statment for this
-        tx.executeSql("INSERT INTO test_table (note, flag_val) VALUES (?,?)", [inpvalue1, inpvalue2], function (tx, res) { //[inpvalue1,inpvalue2] is to comply with sql injection precautions in the earlier code.
+        tx.executeSql("INSERT INTO test_table (note, flag_val) VALUES (?,?)", [inpvalue1.replace("'",""), inpvalue2], function (tx, res) { //[inpvalue1,inpvalue2] is to comply with sql injection precautions in the earlier code.
             console.log("insertId: " + res.insertId + " -- probably 1");
             //alert("insertId: " + res.insertId + " -- probably 1");
             console.log("rowsAffected: " + res.rowsAffected + " -- should be 1");
@@ -129,7 +130,7 @@ $(document).ready(function () {
         var note = prompt("Enter the note");
         if (note.length > 0) {
             document.getElementById("container").innerHTML += "<div><li>" + note + "</li></div>";
-            var stringinp = "'" + note + "'";
+            var stringinp = note;
             insertintoTable(stringinp, 0);
         } else {
             alert("Value not entered");
@@ -151,8 +152,8 @@ $(document).ready(function () {
     $('.container').on("swiperight", 'div', function () { //dynamic binding being done with the parent here.
         $(this).remove();
         //Delete
-        var delval = "'" + $(this).text() + "'";
-        alert(delval);
+        var delval = $(this).text();
+        //alert(delval);
         updatevalTable(delval, -1);
 
     });
@@ -165,7 +166,7 @@ $(document).ready(function () {
         //strikeout
         //Flag_val should be made 1 here 
         //alert($(this).text()); // This gives the value in the text 
-        var upval = "'" + $(this).text() + "'";
+        var upval =  $(this).text();
         updatevalTable(upval, 1);
 
 
