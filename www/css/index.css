@@ -1,0 +1,91 @@
+body {
+    background: #2B2B2B;
+}
+body,
+input,
+select,
+textarea {
+    color: #F6F6F6;
+    font-family: "Lato", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.75em;
+}
+button {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    background-color: #d45b4e;
+    font-size: 12px;
+    border-radius: 80%;
+    color: #F6F6F6;
+    border: white solid 1px;
+    text-align: center;
+}
+section {
+    margin: 0;
+    padding: 5px;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    top: 0px;
+    bottom: 0px;
+    position: fixed;
+    width: 100%
+}
+#view {
+    float: right;
+    position: relative;
+    padding-left: 50px;
+}
+#add {
+    float: left;
+    position: relative;
+}
+#centerBlock {
+    height: 100px;
+    left: 26%;
+    top: 42%;
+    position: absolute;
+}
+#topLeft {
+    height: 100px;
+    top: 4%;
+    position: absolute;
+}
+#bottomRight {
+    height: 100px;
+    top: 88%;
+    right: 8%;
+    position: absolute;
+}
+.container {
+    top: 15%;
+    bottom: 15%;
+    left: 1px;
+    width:90%;
+    position: absolute;
+    overflow-y: scroll;
+    right: 30px;
+    
+}
+li {
+    list-style-type: none;
+}
+.container div:first-child{
+border-top:1px solid #999; 
+    
+}
+
+div li {
+    /*border-bottom-style:dotted;
+    border-bottom-color: #888;*/
+    float: left;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #999;
+    width:100%;
+    
+    
+}
